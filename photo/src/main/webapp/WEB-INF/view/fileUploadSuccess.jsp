@@ -2,7 +2,7 @@
 
 <html>
 <body>
-<h2>Spring MVC file upload example</h2>
+<h2>File upload</h2>
 
 FileName : "
 <strong> ${fileName} </strong>" - Uploaded Successful.

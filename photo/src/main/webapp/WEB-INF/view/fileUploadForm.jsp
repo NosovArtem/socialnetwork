@@ -2,11 +2,10 @@
 <html>
 <head>
     <script type="text/javascript" src="jquery-1.2.6.min.js"></script>
-    <title>Spring MVC file upload</title>
+    <title>File upload</title>
 </head>
 <body>
 <center>
-    <h2>Spring MVC file upload</h2>
     <h3>Please select a file to upload !</h3>
 
     <form:form method="post" enctype="multipart/form-data"

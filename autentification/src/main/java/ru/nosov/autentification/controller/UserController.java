@@ -71,11 +71,11 @@ public class UserController {
 
     @RequestMapping(value = {"/", "/welcome"}, method = RequestMethod.GET)
     public String welcome(Model model) {
-        //String loggedInUsername = securityService.findLoggedInUsername();
         org.springframework.security.core.userdetails.User user =
                 (org.springframework.security.core.userdetails.User)
-                SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+                        SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String name = user.getUsername();
+        //get user_id from context
         User user1 = userDao.findByUsername(name);
 
         return "welcome";

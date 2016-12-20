@@ -13,8 +13,6 @@ public class UserInformationServiceImpl implements UserInformationService {
 
     @Autowired
     UserInformationDao userInformationDao;
-    @Autowired
-    UserInformationDao userInformationDao1;
 
     @Autowired
     MessageSender messageSender;
@@ -32,10 +30,7 @@ public class UserInformationServiceImpl implements UserInformationService {
 
         messageSender.sendMessage(userInformationResponse);
 
-
-
     }
-
 
 
     @Override
@@ -45,6 +40,6 @@ public class UserInformationServiceImpl implements UserInformationService {
 
     @Override
     public UserInformation findByUserId(Long userId) {
-        return userInformationDao1.findByUserId(userId);
+        return userInformationDao.findByUserId(userId);
     }
 }

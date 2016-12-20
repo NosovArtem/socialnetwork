@@ -16,8 +16,6 @@ public class UserInformation {
     @Column(name = "man")
     Boolean man;*/
 
-
-
     @Id
     private Long id;
 

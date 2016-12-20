@@ -5,7 +5,6 @@ import ru.nosov.javaschool.userinfo.model.UserInformationResponse;
 
 public interface UserInformationService {
 
-
     void procedure(UserInformationResponse userInformationResponse);
 
     void save(UserInformation userInformation);

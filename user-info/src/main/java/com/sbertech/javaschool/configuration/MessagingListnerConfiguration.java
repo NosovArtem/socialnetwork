@@ -1,4 +1,4 @@
-package ru.nosov.javaschool.userinfo.configuration;
+package com.sbertech.javaschool.configuration;
 
 import javax.jms.ConnectionFactory;
 

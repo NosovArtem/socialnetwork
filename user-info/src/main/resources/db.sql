@@ -1,7 +1,6 @@
 -- Table: user_informations
 CREATE TABLE user_informations (
-  id       INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  user_id INT NOT NULL,
+  user_id INT NOT NULL PRIMARY KEY,
   first_name VARCHAR(255),
   last_name VARCHAR(255),
   city VARCHAR(255),
@@ -15,4 +14,5 @@ CREATE TABLE user_informations (
 
 )
   ENGINE = InnoDB;
+
 

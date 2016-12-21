@@ -1,55 +1,26 @@
-package ru.nosov.javaschool.userinfo.model;
+package com.sbertech.javaschool.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import java.sql.Date;
+import java.io.Serializable;
 
-@Entity
-@Table(name = "user_informations")
-public class UserInformation {
+public class UserInformation implements Serializable {
 
-   /* @Column(name = "birthday")
-    Date birthday;
-    @Column(name = "man")
-    Boolean man;*/
-
-    @Id
-    private Long id;
-
-    @NotNull
-    @Column(name = "user_id")
-    private Long userId;
-    @Column(name = "first_name")
+    private long userId;
     private String firstName;
-    @Column(name = "last_name")
     private String lastName;
-
-    @Column(name = "city")
     private String city;
-    @Column(name = "mobile_phone")
     private String mobilePhone;
-    @Column(name = "native_language")
     private String nativeLanguage;
-    @Column(name = "religion")
     private String religion;
-    @Column(name = "interests")
     private String interests;
-    @Column(name = "favorite_music")
     private String favoriteMusic;
-    @Column(name = "favorite_book")
     private String favoriteBook;
-    @Column(name = "favorite_film")
     private String favoriteFilm;
 
-
-    public Long getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 
@@ -68,7 +39,6 @@ public class UserInformation {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-
 
     public String getCity() {
         return city;
@@ -135,39 +105,5 @@ public class UserInformation {
     }
 
     public UserInformation() {
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof UserInformation)) return false;
-
-        UserInformation that = (UserInformation) o;
-
-        return getUserId() != null ? getUserId().equals(that.getUserId()) : that.getUserId() == null;
-
-    }
-
-    @Override
-    public int hashCode() {
-        return getUserId() != null ? getUserId().hashCode() : 0;
-    }
-
-
-    @Override
-    public String toString() {
-        return "UserInformation{" +
-                "userId=" + userId +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", city='" + city + '\'' +
-                ", mobilePhone='" + mobilePhone + '\'' +
-                ", nativeLanguage='" + nativeLanguage + '\'' +
-                ", religion='" + religion + '\'' +
-                ", interests='" + interests + '\'' +
-                ", favoriteMusic='" + favoriteMusic + '\'' +
-                ", favoriteBook='" + favoriteBook + '\'' +
-                ", favoriteFilm='" + favoriteFilm + '\'' +
-                '}';
     }
 }

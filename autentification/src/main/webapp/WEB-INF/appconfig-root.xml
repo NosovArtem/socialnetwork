@@ -11,7 +11,7 @@
 
     <import resource="appconfig-security.xml"/>
 
-    <context:component-scan base-package="ru.nosov.autentification.*"/>
+    <context:component-scan base-package="com.sbertech.javaschool.*"/>
 
     <context:property-placeholder location="classpath:db.properties"/>
 

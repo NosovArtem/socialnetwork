@@ -10,6 +10,7 @@
     <http auto-config="true">
         <intercept-url pattern="/" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')"/>
         <intercept-url pattern="/welcome" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')"/>
+        <intercept-url pattern="/userinfo" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')"/>
         <intercept-url pattern="/admin" access="hasRole('ROLE_ADMIN')"/>
 
         <form-login login-page="/login" default-target-url="/welcome" authentication-failure-url="/login?error"
@@ -25,7 +26,7 @@
     </authentication-manager>
 
     <beans:bean id="userDetailsServiceImpl"
-                class="ru.nosov.autentification.service.UserDetailsServiceImpl"></beans:bean>
+                class="com.sbertech.javaschool.service.UserDetailsServiceImpl"></beans:bean>
 
     <beans:bean id="encoder"
                 class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">

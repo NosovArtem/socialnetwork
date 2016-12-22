@@ -87,7 +87,7 @@ public class UserController {
 
     @RequestMapping(value = "/userinfo", method = RequestMethod.GET)
     public String adduserinfo(Model model) {
-      /*  model.addAttribute("userInfoForm", new UserInformation());*/
+        model.addAttribute("userInfoForm", new UserInformation());
 
         return "userinfo";
     }

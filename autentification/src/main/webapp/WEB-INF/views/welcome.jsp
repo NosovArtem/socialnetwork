@@ -20,7 +20,7 @@
 
 <div class="container">
 
-    <c:if test="${pageContext.request.userPrincipal.name != null}">
+
         <form id="logoutForm" method="POST" action="${contextPath}/logout">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         </form>
@@ -28,6 +28,23 @@
         <h2>Welcome ${pageContext.request.userPrincipal.name} | <a onclick="document.forms['logoutForm'].submit()">Logout</a>
         </h2>
 
+    <h2>Friends List</h2>
+
+    <c:if test="${!empty listFriends}">
+        <table class="tg">
+            <tr>
+                <th width="80">ID</th>
+                <th width="120">Login</th>
+                <%--<th width="60">Delete</th>--%>
+            </tr>
+            <c:forEach items="${listFriends}" var="user">
+                <tr>
+                    <td>${user.id}</td>
+                    <td>${user.username}</td>
+                    <%--<td><a href="<c:url value='/remove/${book.id}'/>">Delete</a></td>--%>
+                </tr>
+            </c:forEach>
+        </table>
     </c:if>
 
 </div>

@@ -1,4 +1,4 @@
-package ru.nosov.autentification.service;
+package com.sbertech.javaschool.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 public class SecurityServiceImpl implements SecurityService {
 
 
-    private static final Logger logger = LoggerFactory.getLogger(SecurityServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SecurityServiceImpl.class);
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -43,7 +43,7 @@ public class SecurityServiceImpl implements SecurityService {
         if (authenticationToken.isAuthenticated()) {
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 
-            logger.debug(String.format("Successfully %s auto logged in", username));
+            LOGGER.debug(String.format("Successfully %s auto logged in", username));
         }
     }
 }

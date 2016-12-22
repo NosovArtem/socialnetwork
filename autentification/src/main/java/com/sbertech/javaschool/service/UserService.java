@@ -1,6 +1,6 @@
-package ru.nosov.autentification.service;
+package com.sbertech.javaschool.service;
 
-import ru.nosov.autentification.model.User;
+import com.sbertech.javaschool.model.User;
 
 public interface UserService {
 

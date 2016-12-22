@@ -1,4 +1,4 @@
-package ru.nosov.javaschool.userinfo.model;
+package com.sbertech.javaschool.model;
 
 import java.io.Serializable;
 
@@ -6,9 +6,9 @@ public class UserInformationResponse  implements Serializable {
 
     private UserInformation userInformation;
 
-   /* private int returnCode;*/
-
     private String command;
+
+   /* private int returnCode;*/
 
     public UserInformation getUserInformation() {
         return userInformation;

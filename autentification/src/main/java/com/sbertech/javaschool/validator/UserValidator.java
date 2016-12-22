@@ -1,7 +1,7 @@
-package ru.nosov.autentification.validator;
+package com.sbertech.javaschool.validator;
 
-import ru.nosov.autentification.model.User;
-import ru.nosov.autentification.service.UserService;
+import com.sbertech.javaschool.model.User;
+import com.sbertech.javaschool.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;

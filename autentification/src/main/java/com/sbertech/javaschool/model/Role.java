@@ -1,4 +1,4 @@
-package ru.nosov.autentification.model;
+package com.sbertech.javaschool.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

@@ -1,23 +1,30 @@
-package ru.nosov.autentification.controller;
+package com.sbertech.javaschool.controller;
 
+import com.sbertech.javaschool.messaging.MessageSender;
+import com.sbertech.javaschool.model.User;
+import com.sbertech.javaschool.model.UserInformation;
+import com.sbertech.javaschool.model.UserInformationResponse;
+import com.sbertech.javaschool.service.SecurityService;
+import com.sbertech.javaschool.service.SecurityUtil;
+import com.sbertech.javaschool.service.UserService;
+import com.sbertech.javaschool.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import ru.nosov.autentification.dao.UserDao;
-import ru.nosov.autentification.model.User;
-import ru.nosov.autentification.service.SecurityService;
-import ru.nosov.autentification.service.UserService;
-import ru.nosov.autentification.validator.UserValidator;
 
 
 @Controller
 public class UserController {
+
+    @Autowired
+    MessageSender messageSender;
+
+    @Autowired
+    SecurityUtil securityUtil;
 
     @Autowired
     private UserService userService;
@@ -28,11 +35,6 @@ public class UserController {
     @Autowired
     private UserValidator userValidator;
 
-    @Autowired
-    private UserDao userDao;
-
-    @Autowired
-    private UserDetailsService userDetailsService;
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String registration(Model model) {
@@ -71,12 +73,8 @@ public class UserController {
 
     @RequestMapping(value = {"/", "/welcome"}, method = RequestMethod.GET)
     public String welcome(Model model) {
-        org.springframework.security.core.userdetails.User user =
-                (org.springframework.security.core.userdetails.User)
-                        SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String name = user.getUsername();
-        //get user_id from context
-        User user1 = userDao.findByUsername(name);
+        Long userId = securityUtil.getCurrentUserId();
+        model.addAttribute("listFriends", securityUtil.getCurrentUser().getFriends());
 
         return "welcome";
     }
@@ -84,5 +82,34 @@ public class UserController {
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
     public String admin(Model model) {
         return "admin";
+    }
+
+
+    @RequestMapping(value = "/userinfo", method = RequestMethod.GET)
+    public String adduserinfo(Model model) {
+      /*  model.addAttribute("userInfoForm", new UserInformation());*/
+
+        return "userinfo";
+    }
+
+
+    @RequestMapping(value = "/userinfo", method = RequestMethod.POST)
+    public String adduserinfo(@ModelAttribute("userInfoForm") UserInformation userInfoForm, BindingResult bindingResult, Model model) {
+        //Сделать валидацию по всем полям.
+      /*  userValidator.validate(userInfoForm, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return "registration";
+        }*/
+        UserInformation userInformation = userInfoForm;
+        userInformation.setUserId(securityUtil.getCurrentUserId());
+
+        UserInformationResponse userInformationResponse = new UserInformationResponse();
+        userInformationResponse.setUserInformation(userInformation);
+        userInformationResponse.setCommand("UPDATE");
+
+        messageSender.sendMessage(userInformationResponse);
+
+
+        return "redirect:/welcome";
     }
 }

@@ -1,9 +1,9 @@
-package ru.nosov.autentification.service;
+package com.sbertech.javaschool.service;
 
-import ru.nosov.autentification.dao.RoleDao;
-import ru.nosov.autentification.dao.UserDao;
-import ru.nosov.autentification.model.Role;
-import ru.nosov.autentification.model.User;
+import com.sbertech.javaschool.repository.RoleRepository;
+import com.sbertech.javaschool.model.Role;
+import com.sbertech.javaschool.repository.UserRepository;
+import com.sbertech.javaschool.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -17,10 +17,10 @@ public class UserServiceImpl implements UserService {
 
 
     @Autowired
-    private UserDao userDao;
+    private UserRepository userRepository;
 
     @Autowired
-    private RoleDao roleDao;
+    private RoleRepository roleRepository;
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -29,13 +29,13 @@ public class UserServiceImpl implements UserService {
     public void save(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         Set<Role> roles = new HashSet<>();
-        roles.add(roleDao.getOne(1L));
+        roles.add(roleRepository.getOne(1L));
         user.setRoles(roles);
-        userDao.save(user);
+        userRepository.save(user);
     }
 
     @Override
     public User findByUsername(String username) {
-        return userDao.findByUsername(username);
+        return userRepository.findByUsername(username);
     }
 }

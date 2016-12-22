@@ -1,4 +1,4 @@
-package ru.nosov.autentification.service;
+package com.sbertech.javaschool.service;
 
 public interface SecurityService {
 

@@ -19,19 +19,12 @@
     <br />
     <hr />
 
-   <!-- <form enctype="multipart/form-data" method="post" >
-        <p>Загрузите ваши фотографии на сервер</p>
-        <p><input  type="file" name="uploadfile" multiple accept="image/*,image/jpeg">
-            <input type="submit" value="Отправить"></p>
-    </form>-->
-
     <!-- Javascript functions -->
     <script>
 
         // bind the on-change event for the input element (triggered when a file
         // is chosen)
         $(document).ready(function() {
-            debugger;
             $("#upload-file-input").on("change", uploadFile);
         });
 
@@ -39,7 +32,6 @@
          * Upload the file sending it via Ajax at the Spring Boot server.
          */
         function uploadFile() {
-            debugger;
             $.ajax({
                 url: "/greeting",
                 type: "POST",

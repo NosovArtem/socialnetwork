@@ -1,4 +1,4 @@
-package com.sbertech.javaschool;
+package com.sbertech.javaschool.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -45,17 +45,16 @@ public class GreetingController {
     }
 */
 
-        try {
+        String filename = uploadfile.getOriginalFilename();
+        String directory = env.getProperty("netgloo.paths.uploadedFiles");
+        String filepath = Paths.get(directory, filename).toString();
+
+        try (BufferedOutputStream stream =
+                     new BufferedOutputStream(new FileOutputStream(new File(filepath)));){
             // Get the filename and build the local file path
-            String filename = uploadfile.getOriginalFilename();
-            String directory = env.getProperty("netgloo.paths.uploadedFiles");
-            String filepath = Paths.get(directory, filename).toString();
 
             // Save the file locally
-            BufferedOutputStream stream =
-                    new BufferedOutputStream(new FileOutputStream(new File(filepath)));
             stream.write(uploadfile.getBytes());
-            stream.close();
         }
         catch (Exception e) {
             System.out.println(e.getMessage());

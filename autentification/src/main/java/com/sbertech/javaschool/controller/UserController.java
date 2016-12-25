@@ -26,6 +26,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 
@@ -92,6 +94,7 @@ public class UserController {
     public String welcome(Model model) {
         User currentUser = securityUtil.getCurrentUser();
         currentUser.setAvatarBase64(ServiceImages.encodeImageInBase64(currentUser.getAvatar()));
+        model.addAttribute("user", currentUser);
 
         List<User> collect = currentUser.getFriends()
                 .stream()
@@ -101,9 +104,7 @@ public class UserController {
                             u.setAvatarBase64(image64);
                         }
                 ).collect(Collectors.toList());
-
         model.addAttribute("listFriends", collect);
-        model.addAttribute("user", currentUser);
 
         return "welcome";
     }
@@ -115,7 +116,7 @@ public class UserController {
 
 
     @RequestMapping(value = "/userinfo", method = RequestMethod.GET)
-    public String adduserinfo(Model model) {
+    public String adduserinfoform(Model model) {
 
         UserInformation userInformation = userInformationRepository.findByUserid(securityUtil.getCurrentUserId());
         if (userInformation == null) {
@@ -153,6 +154,43 @@ public class UserController {
         messageSender.sendMessage(userInformationDTO);
 
         return "redirect:/welcome";
+    }
+
+
+    @RequestMapping(value = "/managefriends", method = RequestMethod.GET)
+    public String showFriends(Model model) {
+        List<User> allWithoutMe = userRepository.findAllWithoutMe(securityUtil.getCurrentUserId());
+        Set<User> friends = securityUtil.getCurrentUser().getFriends();
+
+        List<UserDTO> users = allWithoutMe.stream().map(u -> {
+            u.setAvatarBase64(ServiceImages.encodeImageInBase64(u.getAvatar()));
+            UserDTO userDTO = new UserDTO();
+            userDTO.setUser(u);
+            userDTO.setFriend(friends.contains(u));
+            return userDTO;
+        }).collect(Collectors.toList());
+
+        model.addAttribute("users", users);
+     /*   "redirect:/userinfo";*/
+        return "managefriends";
+    }
+
+    @RequestMapping(value = "/managefriends", method = RequestMethod.POST)
+    public String manageFriends(HttpServletRequest request, HttpServletResponse response, Model model) {
+        if (request.getParameter("userId") != null) {
+            Long userId = Long.valueOf(request.getParameter("userId"));
+            User currentUser = securityUtil.getCurrentUser();
+            if (request.getParameter("add") != null) {
+                currentUser.getFriends().add(userRepository.findById(userId));
+            } else if (request.getParameter("remove") != null) {
+                Set<User> listWithoutUser = currentUser.getFriends()
+                        .stream().filter(u -> !Objects.equals(u.getId(), userId)).collect(Collectors.toSet());
+                currentUser.setFriends(listWithoutUser);
+            }
+            userRepository.save(currentUser);
+        }
+
+        return showFriends(model);
     }
 
 

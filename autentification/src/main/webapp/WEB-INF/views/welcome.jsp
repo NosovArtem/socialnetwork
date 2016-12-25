@@ -1,6 +1,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="th" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
@@ -40,17 +41,20 @@
             </tr>
             <c:forEach items="${listFriends}" var="user">
                 <tr>
-                    <td>${user.id}</td>
-                    <td>${user.username}</td>
+                    <td><c:if test="${fn:length(user.avatarBase64) gt 50}">
+                        <img width="50px" src="${user.avatarBase64}" alt="avatar" />
+                    </c:if></td>
+                    <td><a href="${contextPath}/friends/${user.id}">${user.username}</a></td>
                 </tr>
             </c:forEach>
         </table>
     </c:if>
 
-    <form method="POST" action="${contextPath}/doUpload?${_csrf.parameterName}=${_csrf.token}" enctype="multipart/form-data" class="form-signin">
+    <form method="POST" action="${contextPath}/doUpload?${_csrf.parameterName}=${_csrf.token}"
+          enctype="multipart/form-data" class="form-signin">
         <h2 class="form-heading">Log in</h2>
         <input type="file" class="form-control" name="fileUpload" size="50"/>
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Log In</button>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Log In</button>
     </form>
 
 </div>

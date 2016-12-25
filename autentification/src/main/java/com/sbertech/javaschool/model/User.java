@@ -1,6 +1,5 @@
 package com.sbertech.javaschool.model;
 
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -38,6 +37,9 @@ public class User {
     @Lob
     @Column(name = "avatar")
     private byte[] avatar;
+
+    @Transient
+    private String avatarBase64;
 
     @ManyToMany
     @JoinTable(name = "user_roles",
@@ -106,5 +108,13 @@ public class User {
 
     public void setAvatar(byte[] avatar) {
         this.avatar = avatar;
+    }
+
+    public String getAvatarBase64() {
+        return avatarBase64;
+    }
+
+    public void setAvatarBase64(String avatarBase64) {
+        this.avatarBase64 = avatarBase64;
     }
 }

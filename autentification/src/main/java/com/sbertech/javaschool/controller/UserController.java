@@ -7,6 +7,7 @@ import com.sbertech.javaschool.model.UserInformationResponse;
 import com.sbertech.javaschool.repository.UserRepository;
 import com.sbertech.javaschool.service.SecurityService;
 import com.sbertech.javaschool.service.SecurityUtil;
+import com.sbertech.javaschool.service.ServiceImages;
 import com.sbertech.javaschool.service.UserService;
 import com.sbertech.javaschool.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,6 +23,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Controller
@@ -81,8 +86,16 @@ public class UserController {
 
     @RequestMapping(value = {"/", "/welcome"}, method = RequestMethod.GET)
     public String welcome(Model model) {
-        Long userId = securityUtil.getCurrentUserId();
-        model.addAttribute("listFriends", securityUtil.getCurrentUser().getFriends());
+        List<User> collect = securityUtil.getCurrentUser().getFriends()
+                .stream()
+                .peek(u -> {
+                            byte[] avatar = u.getAvatar();
+                            String image64 = ServiceImages.encodeImageInBase64(avatar);
+                            u.setAvatarBase64(image64);
+                        }
+                ).collect(Collectors.toList());
+
+        model.addAttribute("listFriends", collect);
 
         return "welcome";
     }
@@ -133,5 +146,12 @@ public class UserController {
         return "welcome";
     }
 
+    @RequestMapping(value = "/friends/{id}", method = RequestMethod.GET)
+    public String showFriend(Model model, @PathVariable("id") Long id) throws UnsupportedEncodingException {
+        User user = userRepository.findById(id);
+        user.setAvatarBase64(ServiceImages.encodeImageInBase64(user.getAvatar()));
+        model.addAttribute("user", user);
+        return "friends";
+    }
 
 }

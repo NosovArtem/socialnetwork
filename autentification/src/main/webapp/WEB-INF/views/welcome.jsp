@@ -22,6 +22,9 @@
 
 <div class="container">
 
+    <c:if test="${fn:length(user.avatarBase64) gt 50}">
+        <img width="100px" src="${user.avatarBase64}" alt="avatar" />
+    </c:if>
 
     <form id="logoutForm" method="POST" action="${contextPath}/logout">
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>

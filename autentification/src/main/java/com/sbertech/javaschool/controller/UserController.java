@@ -86,7 +86,10 @@ public class UserController {
 
     @RequestMapping(value = {"/", "/welcome"}, method = RequestMethod.GET)
     public String welcome(Model model) {
-        List<User> collect = securityUtil.getCurrentUser().getFriends()
+        User currentUser = securityUtil.getCurrentUser();
+        currentUser.setAvatarBase64(ServiceImages.encodeImageInBase64(currentUser.getAvatar()));
+
+        List<User> collect = currentUser.getFriends()
                 .stream()
                 .peek(u -> {
                             byte[] avatar = u.getAvatar();
@@ -96,6 +99,7 @@ public class UserController {
                 ).collect(Collectors.toList());
 
         model.addAttribute("listFriends", collect);
+        model.addAttribute("user", currentUser);
 
         return "welcome";
     }

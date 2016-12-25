@@ -36,7 +36,7 @@ public class PhotoUploadController {
             @ModelAttribute("uploadedFile") Photo uploadedFile,
             BindingResult result) {
 
-        MultipartFile file = uploadedFile.getFile();
+        MultipartFile file = uploadedFile. getFile();
         fileValidator.validate(uploadedFile, result);
 
         String fileName = file.getOriginalFilename();

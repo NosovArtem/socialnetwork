@@ -1,47 +1,27 @@
-package com.sbertech.javaschool.model;
+package com.sbertech.javaschool.messaging.dto;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
-@Entity
-@Table(name = "user_informations")
-public class UserInformation {
+public class UserInformationDTO implements Serializable {
 
-    @Id
-    @NotNull
-    @Column(name = "user_id")
-    private Long userid;
-    @Column(name = "first_name")
+    private long userId;
     private String firstName;
-    @Column(name = "last_name")
     private String lastName;
-    @Column(name = "city")
     private String city;
-    @Column(name = "mobile_phone")
     private String mobilePhone;
-    @Column(name = "native_language")
     private String nativeLanguage;
-    @Column(name = "religion")
     private String religion;
-    @Column(name = "interests")
     private String interests;
-    @Column(name = "favorite_music")
     private String favoriteMusic;
-    @Column(name = "favorite_book")
     private String favoriteBook;
-    @Column(name = "favorite_film")
     private String favoriteFilm;
 
-
-    public Long getUserId() {
-        return userid;
+    public long getUserId() {
+        return userId;
     }
 
-    public void setUserId(Long userid) {
-        this.userid = userid;
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 
     public String getFirstName() {
@@ -124,6 +104,6 @@ public class UserInformation {
         this.favoriteFilm = favoriteFilm;
     }
 
-    public UserInformation() {
+    public UserInformationDTO() {
     }
 }

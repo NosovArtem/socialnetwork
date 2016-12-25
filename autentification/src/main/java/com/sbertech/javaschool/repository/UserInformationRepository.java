@@ -3,7 +3,6 @@ package com.sbertech.javaschool.repository;
 import com.sbertech.javaschool.model.UserInformation;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserInformationDataRepository extends JpaRepository<UserInformation, Long> {
-
+public interface UserInformationRepository extends JpaRepository<UserInformation, Long> {
     UserInformation findByUserid(Long userid);
 }

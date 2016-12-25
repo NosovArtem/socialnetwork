@@ -1,27 +1,47 @@
 package com.sbertech.javaschool.model;
 
-import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
-public class UserInformation implements Serializable {
+@Entity
+@Table(name = "user_informations")
+public class UserInformation {
 
-    private long userId;
+    @Id
+    @NotNull
+    @Column(name = "user_id")
+    private Long userid;
+    @Column(name = "first_name")
     private String firstName;
+    @Column(name = "last_name")
     private String lastName;
+    @Column(name = "city")
     private String city;
+    @Column(name = "mobile_phone")
     private String mobilePhone;
+    @Column(name = "native_language")
     private String nativeLanguage;
+    @Column(name = "religion")
     private String religion;
+    @Column(name = "interests")
     private String interests;
+    @Column(name = "favorite_music")
     private String favoriteMusic;
+    @Column(name = "favorite_book")
     private String favoriteBook;
+    @Column(name = "favorite_film")
     private String favoriteFilm;
 
-    public long getUserId() {
-        return userId;
+
+    public Long getUserId() {
+        return userid;
     }
 
-    public void setUserId(long userId) {
-        this.userId = userId;
+    public void setUserId(Long userid) {
+        this.userid = userid;
     }
 
     public String getFirstName() {

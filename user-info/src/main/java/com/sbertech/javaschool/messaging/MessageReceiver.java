@@ -1,6 +1,6 @@
 package com.sbertech.javaschool.messaging;
 
-import com.sbertech.javaschool.model.UserInformationResponse;
+import com.sbertech.javaschool.messaging.dto.UserInformationDTO;
 import com.sbertech.javaschool.service.UserInformationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,13 +22,13 @@ public class MessageReceiver {
     UserInformationService userInformationService;
 
     @JmsListener(destination = ORDER_QUEUE)
-    public void receiveMessage(final Message<UserInformationResponse> message) throws JMSException {
+    public void receiveMessage(final Message<UserInformationDTO> message) throws JMSException {
         MessageHeaders headers = message.getHeaders();
         LOGGER.info("Application : headers received : {}", headers);
 
-        UserInformationResponse userInformationResponse = message.getPayload();
-        LOGGER.info("Application : response received : {}", userInformationResponse);
+        UserInformationDTO userInformationDTO = message.getPayload();
+        LOGGER.info("Application : response received : {}", userInformationDTO);
 
-        userInformationService.procedure(userInformationResponse);
+        userInformationService.procedure(userInformationDTO);
     }
 }

@@ -1,9 +1,10 @@
 package com.sbertech.javaschool.controller;
 
 import com.sbertech.javaschool.messaging.MessageSender;
+import com.sbertech.javaschool.messaging.dto.UserInformationDTO;
 import com.sbertech.javaschool.model.User;
 import com.sbertech.javaschool.model.UserInformation;
-import com.sbertech.javaschool.model.UserInformationResponse;
+import com.sbertech.javaschool.repository.UserInformationRepository;
 import com.sbertech.javaschool.repository.UserRepository;
 import com.sbertech.javaschool.service.SecurityService;
 import com.sbertech.javaschool.service.SecurityUtil;
@@ -30,6 +31,9 @@ import java.util.stream.Collectors;
 
 @Controller
 public class UserController {
+
+    @Autowired
+    UserInformationRepository userInformationRepository;
 
     @Autowired
     UserRepository userRepository;
@@ -112,27 +116,41 @@ public class UserController {
 
     @RequestMapping(value = "/userinfo", method = RequestMethod.GET)
     public String adduserinfo(Model model) {
-        model.addAttribute("userInfoForm", new UserInformation());
+
+        UserInformation userInformation = userInformationRepository.findByUserid(securityUtil.getCurrentUserId());
+        if (userInformation == null) {
+            userInformation = new UserInformation();
+        }
+
+        model.addAttribute("userInfoForm", userInformation);
 
         return "userinfo";
     }
 
 
     @RequestMapping(value = "/userinfo", method = RequestMethod.POST)
-    public String adduserinfo(@ModelAttribute("userInfoForm") UserInformation userInfoForm, BindingResult bindingResult, Model model) {
+    public String adduserinfo(@ModelAttribute("userInfoForm") UserInformation userInformation, BindingResult bindingResult, Model model) {
         //Сделать валидацию по всем полям.
       /*  userValidator.validate(userInfoForm, bindingResult);
         if (bindingResult.hasErrors()) {
             return "registration";
         }*/
-        UserInformation userInformation = userInfoForm;
-        userInformation.setUserId(securityUtil.getCurrentUserId());
 
-        UserInformationResponse userInformationResponse = new UserInformationResponse();
-        userInformationResponse.setUserInformation(userInformation);
-        userInformationResponse.setCommand("UPDATE");
+        UserInformationDTO userInformationDTO = new UserInformationDTO();
+        userInformationDTO.setFirstName(userInformation.getFirstName());
+        userInformationDTO.setLastName(userInformation.getLastName());
+        userInformationDTO.setCity(userInformation.getCity());
+        userInformationDTO.setMobilePhone(userInformation.getMobilePhone());
+        userInformationDTO.setNativeLanguage(userInformation.getNativeLanguage());
+        userInformationDTO.setReligion(userInformation.getReligion());
+        userInformationDTO.setInterests(userInformation.getInterests());
+        userInformationDTO.setFavoriteMusic(userInformation.getFavoriteMusic());
+        userInformationDTO.setFavoriteBook(userInformation.getFavoriteBook());
+        userInformationDTO.setFavoriteFilm(userInformation.getFavoriteFilm());
 
-        messageSender.sendMessage(userInformationResponse);
+        userInformationDTO.setUserId(securityUtil.getCurrentUserId());
+
+        messageSender.sendMessage(userInformationDTO);
 
         return "redirect:/welcome";
     }

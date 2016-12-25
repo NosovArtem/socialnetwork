@@ -4,6 +4,7 @@ import com.sbertech.javaschool.messaging.MessageSender;
 import com.sbertech.javaschool.model.User;
 import com.sbertech.javaschool.model.UserInformation;
 import com.sbertech.javaschool.model.UserInformationResponse;
+import com.sbertech.javaschool.repository.UserRepository;
 import com.sbertech.javaschool.service.SecurityService;
 import com.sbertech.javaschool.service.SecurityUtil;
 import com.sbertech.javaschool.service.UserService;
@@ -15,10 +16,18 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 
 @Controller
 public class UserController {
+
+    @Autowired
+    UserRepository userRepository;
 
     @Autowired
     MessageSender messageSender;
@@ -63,7 +72,6 @@ public class UserController {
         if (error != null) {
             model.addAttribute("error", "Username or password is incorrect.");
         }
-
         if (logout != null) {
             model.addAttribute("message", "Logged out successfully.");
         }
@@ -109,7 +117,21 @@ public class UserController {
 
         messageSender.sendMessage(userInformationResponse);
 
-
         return "redirect:/welcome";
     }
+
+
+    @RequestMapping(value = "/doUpload", method = RequestMethod.POST)
+    public String handleFileUpload(HttpServletRequest request, HttpServletResponse response,
+                                   @RequestParam("fileUpload") MultipartFile fileUpload) throws Exception {
+
+        User user = securityUtil.getCurrentUser();
+
+        user.setAvatar(fileUpload.getBytes());
+        userRepository.save(user);
+
+        return "welcome";
+    }
+
+
 }

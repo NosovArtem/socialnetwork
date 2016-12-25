@@ -1,5 +1,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="th" uri="http://www.springframework.org/tags/form" %>
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
@@ -21,12 +22,13 @@
 <div class="container">
 
 
-        <form id="logoutForm" method="POST" action="${contextPath}/logout">
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-        </form>
+    <form id="logoutForm" method="POST" action="${contextPath}/logout">
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+    </form>
 
-        <h2>Welcome ${pageContext.request.userPrincipal.name} | <a onclick="document.forms['logoutForm'].submit()">Logout</a>
-        </h2>
+    <h2>Welcome ${pageContext.request.userPrincipal.name} | <a
+            onclick="document.forms['logoutForm'].submit()">Logout</a>
+    </h2>
 
     <h2>Friends List</h2>
 
@@ -35,19 +37,24 @@
             <tr>
                 <th width="80">ID</th>
                 <th width="120">Login</th>
-                <%--<th width="60">Delete</th>--%>
             </tr>
             <c:forEach items="${listFriends}" var="user">
                 <tr>
                     <td>${user.id}</td>
                     <td>${user.username}</td>
-                    <%--<td><a href="<c:url value='/remove/${book.id}'/>">Delete</a></td>--%>
                 </tr>
             </c:forEach>
         </table>
     </c:if>
 
+    <form method="POST" action="${contextPath}/doUpload?${_csrf.parameterName}=${_csrf.token}" enctype="multipart/form-data" class="form-signin">
+        <h2 class="form-heading">Log in</h2>
+        <input type="file" class="form-control" name="fileUpload" size="50"/>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Log In</button>
+    </form>
+
 </div>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="${contextPath}/resources/js/bootstrap.min.js"></script>
 </body>

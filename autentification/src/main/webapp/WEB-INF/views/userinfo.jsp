@@ -27,10 +27,26 @@
 
 <body>
 
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-4"><h2>Welcome ${pageContext.request.userPrincipal.name}</h2></div>
+
+    <div class="col-md-4"></div>
+
+    <div class="col-md-3"><h2><a onclick="document.forms['logoutForm'].submit()">Logout</a></h2></div>
+
+    <form id="logoutForm" method="POST" action="${contextPath}/logout">
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+    </form>
+</div>
+
+
+
 <div class="container">
+    <div><h2><a href="${contextPath}/">Back on main page</a></h2></div>
 
     <form:form method="POST" modelAttribute="userInfoForm" class="form-signin">
-        <h2 class="form-signin-heading">Create your account</h2>
+        <h2 class="form-signin-heading">Add the information about yourself</h2>
         <spring:bind path="firstName">
             <div class="form-group ${status.error ? 'has-error' : ''}">
                 <form:input type="text" path="firstName" class="form-control" placeholder="firstName"

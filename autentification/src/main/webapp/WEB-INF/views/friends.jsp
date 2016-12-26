@@ -7,10 +7,16 @@
     <title>Title</title>
 </head>
 <body>
+<div class="row">
+    <div><h2><a href="${contextPath}/">Back on main page</a></h2></div>
+</div>
+
 <c:if test="${fn:length(user.avatarBase64) gt 50}">
     <img width="100px" src="${user.avatarBase64}" alt="avatar" />
 </c:if>
 <h1>${user.username}</h1>
+
+
 
 
 </body>

@@ -22,40 +22,56 @@
 
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-
 </head>
-<body>
-<h2 class="form-signin-heading">Add friends</h2>
 
-<div>
-    <h2>Manage Friends</h2>
-    <table class="table">
-        <tr>
-            <th>Foto</th>
-            <th>Username</th>
-            <th>Action</th>
-        </tr>
-        <c:forEach items="${users}" var="userDTO">
+<body>
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-4"><h2>Welcome ${pageContext.request.userPrincipal.name}</h2></div>
+
+    <div class="col-md-4"></div>
+
+    <div class="col-md-3"><h2><a onclick="document.forms['logoutForm'].submit()">Logout</a></h2></div>
+
+    <form id="logoutForm" method="POST" action="${contextPath}/logout">
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+    </form>
+</div>
+
+
+<div class="container">
+    <div><h2><a href="${contextPath}/">Back on main page</a></h2></div>
+
+    <div>
+        <table class="table">
+            <caption><h2 class="form-signin-heading">Add friends</h2></caption>
             <tr>
-                <td><c:if test="${fn:length(userDTO.user.avatarBase64) gt 50}">
-                    <img width="50px" src="${userDTO.user.avatarBase64}" alt="avatar"/>
-                </c:if></td>
-                <td><a href="${contextPath}/friends/${userDTO.user.id}">${userDTO.user.username}</a></td>
-                <td>
-                    <form method="POST" action="${contextPath}/managefriends" class="form-signin">
-                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                        <input type="hidden" name="userId" value="${userDTO.user.id}"/>
-                        <c:if test="${!userDTO.friend}">
-                            <button class="btn btn-success" name="add" type="submit">Add</button>
-                        </c:if>
-                        <c:if test="${userDTO.friend}">
-                            <button class="btn btn-danger" name="remove" type="submit">Remove</button>
-                        </c:if>
-                    </form>
-                </td>
+                <th>Photo</th>
+                <th>Username</th>
+                <th>Action</th>
             </tr>
-        </c:forEach>
-    </table>
+            <c:forEach items="${users}" var="userDTO">
+                <tr>
+                    <td><c:if test="${fn:length(userDTO.user.avatarBase64) gt 50}">
+                        <img width="50px" src="${userDTO.user.avatarBase64}" alt="avatar"/>
+                    </c:if></td>
+                    <td><a href="${contextPath}/friends/${userDTO.user.id}">${userDTO.user.username}</a></td>
+                    <td>
+                        <form method="POST" action="${contextPath}/managefriends" class="form-signin">
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                            <input type="hidden" name="userId" value="${userDTO.user.id}"/>
+                            <c:if test="${!userDTO.friend}">
+                                <button class="btn btn-success" name="add" type="submit">Add</button>
+                            </c:if>
+                            <c:if test="${userDTO.friend}">
+                                <button class="btn btn-danger" name="remove" type="submit">Remove</button>
+                            </c:if>
+                        </form>
+                    </td>
+                </tr>
+            </c:forEach>
+        </table>
+    </div>
 </div>
 </body>
 </html>

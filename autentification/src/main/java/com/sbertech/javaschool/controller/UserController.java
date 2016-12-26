@@ -106,6 +106,12 @@ public class UserController {
                 ).collect(Collectors.toList());
         model.addAttribute("listFriends", collect);
 
+        UserInformation userInformation = userInformationRepository.findByUserid(securityUtil.getCurrentUserId());
+        if (userInformation == null) {
+            userInformation = new UserInformation();
+        }
+        model.addAttribute("userInfoForm", userInformation);
+
         return "welcome";
     }
 
@@ -122,9 +128,7 @@ public class UserController {
         if (userInformation == null) {
             userInformation = new UserInformation();
         }
-
         model.addAttribute("userInfoForm", userInformation);
-
         return "userinfo";
     }
 

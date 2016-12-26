@@ -16,7 +16,7 @@ import javax.jms.JMSException;
 public class MessageReceiver {
     static final Logger LOGGER = LoggerFactory.getLogger(MessageReceiver.class);
 
-    private static final String ORDER_QUEUE = "order-queue";
+    private static final String ORDER_QUEUE = "queue";
 
     @Autowired
     UserInformationService userInformationService;

@@ -12,7 +12,7 @@ public class MessagingConfiguration {
 
     private static final String DEFAULT_BROKER_URL = "tcp://localhost:61616";
 
-    private static final String ORDER_QUEUE = "order-queue";
+    private static final String ORDER_QUEUE = "queue";
 
     @Bean
     public ActiveMQConnectionFactory connectionFactory() {

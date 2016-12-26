@@ -1,6 +1,6 @@
-package com.sbertech.javaschool.repository;
+package com.sbertech.javaschool.repositories;
 
-import com.sbertech.javaschool.model.UserInformation;
+import com.sbertech.javaschool.models.UserInformation;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserInformationRepository extends JpaRepository<UserInformation, Long> {

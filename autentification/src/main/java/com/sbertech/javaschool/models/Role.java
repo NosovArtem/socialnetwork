@@ -1,4 +1,4 @@
-package com.sbertech.javaschool.model;
+package com.sbertech.javaschool.models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

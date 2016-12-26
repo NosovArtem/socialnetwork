@@ -175,7 +175,6 @@ public class UserController {
         }).collect(Collectors.toList());
 
         model.addAttribute("users", users);
-     /*   "redirect:/userinfo";*/
         return "managefriends";
     }
 
@@ -211,10 +210,27 @@ public class UserController {
     }
 
     @RequestMapping(value = "/friends/{id}", method = RequestMethod.GET)
-    public String showFriend(Model model, @PathVariable("id") Long id) throws UnsupportedEncodingException {
+    public String showFriend(Model model, @PathVariable("id") Long id) {
         User user = userRepository.findById(id);
         user.setAvatarBase64(ServiceImages.encodeImageInBase64(user.getAvatar()));
         model.addAttribute("user", user);
+
+        List<User> collect = user.getFriends()
+                .stream()
+                .peek(u -> {
+                            byte[] avatar = u.getAvatar();
+                            String image64 = ServiceImages.encodeImageInBase64(avatar);
+                            u.setAvatarBase64(image64);
+                        }
+                ).collect(Collectors.toList());
+        model.addAttribute("listFriends", collect);
+
+        UserInformation userInformation = userInformationRepository.findByUserid(securityUtil.getCurrentUserId());
+        if (userInformation == null) {
+            userInformation = new UserInformation();
+        }
+        model.addAttribute("userInfoForm", userInformation);
+
         return "friends";
     }
 

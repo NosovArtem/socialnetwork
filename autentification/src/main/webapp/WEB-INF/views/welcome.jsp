@@ -42,18 +42,14 @@
         <div class="col-md-4">
             <!--Avatar-->
             <c:if test="${fn:length(user.avatarBase64) gt 50}">
-                <img src="${user.avatarBase64}" class="img-thumbnail" width="130px" alt="avatar"/>
+                <img src="${user.avatarBase64}" class="img-thumbnail" width="150px" alt="avatar"/>
             </c:if>
 
-            <c:if test="${fn:length(user.avatarBase64) < 50}">
-                <form method="POST" action="${contextPath}/doUpload?${_csrf.parameterName}=${_csrf.token}"
-                      enctype="multipart/form-data" class="form-signin">
-                    <p>Select a photo to avtatara</p>
-                    <input type="file" name="fileUpload" size="50"
-                           placeholder="select avtatara"/>
-                    <button class="btn btn-primary btn-md" type="submit">download</button>
-                </form>
-            </c:if>
+            <form method="POST" action="${contextPath}/doUpload?${_csrf.parameterName}=${_csrf.token}"
+                  enctype="multipart/form-data" class="form-signin">
+                <input type="file" name="fileUpload" size="50"/>
+                <button type="submit">save</button>
+            </form>
 
             <%--<c:if test="${!empty listFriends}">--%>
             <div class="table-responsive">

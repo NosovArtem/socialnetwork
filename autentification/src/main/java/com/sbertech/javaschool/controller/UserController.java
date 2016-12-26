@@ -206,7 +206,7 @@ public class UserController {
         user.setAvatar(fileUpload.getBytes());
         userRepository.save(user);
 
-        return "welcome";
+        return "redirect:/welcome";
     }
 
     @RequestMapping(value = "/friends/{id}", method = RequestMethod.GET)

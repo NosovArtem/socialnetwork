@@ -33,7 +33,7 @@
         <div class="col-md-4">
             <!--Avatar-->
             <c:if test="${fn:length(user.avatarBase64) gt 50}">
-                <img src="${user.avatarBase64}" class="img-thumbnail" width="130px" alt="avatar"/>
+                <img src="${user.avatarBase64}" class="img-thumbnail" width="150px" alt="avatar"/>
             </c:if>
             <h1>${user.username}</h1>
 

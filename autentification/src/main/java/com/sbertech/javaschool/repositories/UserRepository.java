@@ -1,6 +1,6 @@
-package com.sbertech.javaschool.repository;
+package com.sbertech.javaschool.repositories;
 
-import com.sbertech.javaschool.model.User;
+import com.sbertech.javaschool.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
